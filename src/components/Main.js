@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import vectorButton from '../images/vectorButton.svg';
 import Card from './Card';
-import api from '../utils/api';
+import { api } from '../utils/api';
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [userName, setUserName] = useState('');
