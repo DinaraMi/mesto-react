@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import vectorButton from '../images/vectorButton.svg';
 import Card from './Card';
-import { api } from '../utils/Api';
+import { api } from '../utils/api';
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [userName, setUserName] = useState('');
@@ -71,7 +71,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
       <section className="group">
         {cards.map((card) => (
           <Card
-            key={card.id}
+            key={card._id}
             card={card}
             onCardClick={onCardClick}
           />
@@ -80,5 +80,4 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
     </main>
   );
 }
-
 export default Main;

@@ -41,7 +41,7 @@ function App() {
     setImagePopupOpen(false);
   };
   return (
-    <div>
+    <div className="body">
       <div className="page">
         <Header />
         <Main

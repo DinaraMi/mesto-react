@@ -2,11 +2,10 @@ import '../index.css';
 import logo from '../images/Vector.svg';
 
 function Header() {
-return (
+  return (
     <header className="header">
-    <img class="header__logo" src={logo} alt="логотип"/>
+      <img className="header__logo" src={logo} alt="логотип"/>
     </header>
-)
+  )
 }
-
 export default Header
