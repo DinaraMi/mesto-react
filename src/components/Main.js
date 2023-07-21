@@ -1,79 +1,64 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import vectorButton from '../images/vectorButton.svg';
 import Card from './Card';
-import api from '../utils/api'
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import CurrentCardsContext from '../contexts/CurrentCardsContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
-  useEffect(() => {
-    api.getUserInformation()
-      .then((data) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    api.getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete }) {
+  const cards = React.useContext(CurrentCardsContext);
+  const currentUser = React.useContext(CurrentUserContext);
   return (
     <main className="content">
-      <section className="profile">
-        <div className="profile__avatar-container">
-          <button
-            className="profile__avatar-button"
-            type="button"
-            aria-label="Обновить аватарку"
-            onClick={onEditAvatar}
-          >
-            {userAvatar && (
-              <img
-                className="profile__avatar"
-                src={userAvatar.toString()}
-                alt="Аватар"
-                style={{ backgroundImage: `url(${userAvatar})` }}
-              />
-            )}
-            <span className="profile__avatar-edit-icon"></span>
-          </button>
-        </div>
-        <div className="profile__info">
-          <div className="profile__informs">
-            <h1 className="profile__title">{userName}</h1>
+      {currentUser && (
+        <section className="profile">
+          <div className="profile__avatar-container">
             <button
-              className="profile__edit-button"
+              className="profile__avatar-button"
               type="button"
-              aria-label="Редактировать"
-              onClick={onEditProfile}
+              aria-label="Обновить аватарку"
+              onClick={onEditAvatar}
             >
-              <img className="profile__vector" src={vectorButton} alt="Кнопка редактирования" />
+              {currentUser.avatar && (
+                <img
+                  className="profile__avatar"
+                  src={currentUser.avatar.toString()}
+                  alt="Аватар"
+                  style={{ backgroundImage: `url(${currentUser.avatar})` }}
+                />
+              )}
+              <span className="profile__avatar-edit-icon"></span>
             </button>
           </div>
-          <p className="profile__subtitle">{userDescription}</p>
-        </div>
-        <button
-          className="profile__add-button"
-          type="button"
-          aria-label="Добавить картинку"
-          onClick={onAddPlace}
-        ></button>
-      </section>
+          <div className="profile__info">
+            <div className="profile__informs">
+              <h1 className="profile__title">{currentUser.name}</h1>
+              <button
+                className="profile__edit-button"
+                type="button"
+                aria-label="Редактировать"
+                onClick={onEditProfile}
+              >
+                <img className="profile__vector" src={vectorButton} alt="Кнопка редактирования" />
+              </button>
+            </div>
+            <p className="profile__subtitle">{currentUser.about}</p>
+          </div>
+          <button
+            className="profile__add-button"
+            type="button"
+            aria-label="Добавить картинку"
+            onClick={onAddPlace}
+          ></button>
+        </section>
+      )}
       <section className="group">
         {cards.map((card) => (
           <Card
             key={card._id}
             card={card}
             onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
           />
         ))}
       </section>

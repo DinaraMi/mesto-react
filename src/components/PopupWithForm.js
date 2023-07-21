@@ -1,13 +1,13 @@
 import React from 'react';
 
-function PopupWithForm({ title, name, isOpen, onClose,  fields }) {
+function PopupWithForm({ title, name, isOpen, onClose, fields, onSubmit }) {
   return (
     <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container">
         <button className="popup__close-btn" type="button" aria-label="Закрытие попапа" onClick={onClose}></button>
         <div className="popup__content">
           <h3 className="popup__title">{title}</h3>
-          <form className={`popup__form-element popup__form-element_type_${name}`} name={`${name}-form`} >
+          <form className={`popup__form-element popup__form-element_type_${name}`} name={`${name}-form`} onSubmit={onSubmit} >
             {fields.map((field) => (
               <div className="popup__input-container" key={field.name}>
                 <input
@@ -16,8 +16,6 @@ function PopupWithForm({ title, name, isOpen, onClose,  fields }) {
                   type={field.type}
                   name={field.name}
                   placeholder={field.placeholder}
-                  // value={formValues[field.name] || ''}
-                  // onChange={handleInputChange}
                   required={field.required}
                 />
                 <span id={`${field.name}-error`} className="popup__error"></span>
