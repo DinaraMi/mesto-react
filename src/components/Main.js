@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import vectorButton from '../images/vectorButton.svg';
 import Card from './Card';
 import CurrentUserContext from '../contexts/CurrentUserContext';
-import CurrentCardsContext from '../contexts/CurrentCardsContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete }) {
-  const cards = React.useContext(CurrentCardsContext);
-  const currentUser = React.useContext(CurrentUserContext);
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards, onCardDeleteClick }) {
+  const currentUser = useContext(CurrentUserContext);
   return (
     <main className="content">
       {currentUser && (
@@ -58,7 +56,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike
             card={card}
             onCardClick={onCardClick}
             onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
+            onCardDeleteClick={onCardDeleteClick}
           />
         ))}
       </section>

@@ -29,7 +29,7 @@ class Api {
         headers: this._headers,
         body: JSON.stringify({
           name: data.name,
-          about: data.info
+          about: data.about,
         })
       })
       .then(this._checkResponse);

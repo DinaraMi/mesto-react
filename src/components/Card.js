@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Trash from '../images/Trash.png'
 
-function Card ({ card, onCardClick, onCardLike, onCardDelete} ) {
-  const currentUser = React.useContext(CurrentUserContext);
+function Card ({ card, onCardClick, onCardLike, onCardDeleteClick} ) {
+  const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some(i => i._id === currentUser._id);
-  // нужно решить почему всегда показыввет false;
-  //console.log(isLiked)
   const cardLikeButtonClassName = ( 
     `group__vector ${isLiked && 'group__vector_active' }` 
   )
@@ -18,8 +16,9 @@ function Card ({ card, onCardClick, onCardLike, onCardDelete} ) {
     onCardLike(card);
   }
   const handleDeleteClick = () => {
-    onCardDelete(card)
+    onCardDeleteClick(card._id)
   }
+
   return(
     <div className="group__element">
       <img className="group__mask" style={{ backgroundImage: `url(${card.link})` }} src={card.link.toString()} alt={card.name} onClick={handleClick}/>

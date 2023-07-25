@@ -1,6 +1,8 @@
 import React from 'react';
+import useFormValidation from '../utils/useFormValidation';
 
-function PopupWithForm({ title, name, isOpen, onClose, fields, onSubmit }) {
+function PopupWithForm({ title, name, isOpen, onClose, fields, onSubmit, isLoading }) {
+  const {values, errors, isValid, isInputValid, handleChange} = useFormValidation();
   return (
     <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container">
@@ -17,12 +19,17 @@ function PopupWithForm({ title, name, isOpen, onClose, fields, onSubmit }) {
                   name={field.name}
                   placeholder={field.placeholder}
                   required={field.required}
+                  minLength={field.minLength}
+                  maxLength={field.maxLength}
+                  value={values[field.name] || ''}
+                  ref={field.ref}
+                  onChange={handleChange}
                 />
-                <span id={`${field.name}-error`} className="popup__error"></span>
+                <span id={`${field.name}-error`} className={`popup__error ${isInputValid[field.name] ? '' : 'popup__error_active'}`}>{errors[field.name]}</span>
               </div>
             ))}
-            <button className="popup__save" type="submit" aria-label="Сохранить редактирование">
-              Сохранить
+            <button className={`popup__save ${isValid ? '' : 'popup__save_disabled'}`} type="submit" aria-label="Сохранить редактирование">
+              {isLoading ? 'Сохранить ...' : 'Сохранить'}
             </button>
           </form>
         </div>
