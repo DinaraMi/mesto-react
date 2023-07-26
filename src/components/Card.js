@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Trash from '../images/Trash.png'
 
-function Card ({ card, onCardClick, onCardLike, onCardDeleteClick} ) {
+function Card({ card, onCardClick, onCardLike, onCardDeleteClick }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some(i => i._id === currentUser._id);
-  const cardLikeButtonClassName = ( 
-    `group__vector ${isLiked && 'group__vector_active' }` 
+  const cardLikeButtonClassName = (
+    `group__vector ${isLiked && 'group__vector_active'}`
   )
   const handleClick = () => {
     onCardClick(card);
@@ -18,12 +18,11 @@ function Card ({ card, onCardClick, onCardLike, onCardDeleteClick} ) {
   const handleDeleteClick = () => {
     onCardDeleteClick(card._id)
   }
-
-  return(
+  return (
     <div className="group__element">
-      <img className="group__mask" style={{ backgroundImage: `url(${card.link})` }} src={card.link.toString()} alt={card.name} onClick={handleClick}/>
+      <img className="group__mask" style={{ backgroundImage: `url(${card.link})` }} src={card.link.toString()} alt={card.name} onClick={handleClick} />
       {isOwn && <button className='group__delite' onClick={handleDeleteClick}>
-        <img className="group__img" src={Trash} alt="Картинка удаления"/>
+        <img className="group__img" src={Trash} alt="Картинка удаления" />
       </button>}
       <div className="group__text">
         <h2 className="group__paragraph">{card.name}</h2>

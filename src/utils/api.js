@@ -25,23 +25,23 @@ class Api {
   }
   editUserInformation(data) {
     return fetch(`${this._url}/users/me`, {
-        method: 'PATCH',
-        headers: this._headers,
-        body: JSON.stringify({
-          name: data.name,
-          about: data.about,
-        })
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about,
       })
+    })
       .then(this._checkResponse);
   }
   editUserAvatar(data) {
     return fetch(`${this._url}/users/me/avatar`, {
-        method: 'PATCH',
-        headers: this._headers,
-        body: JSON.stringify({
-          avatar: data.link
-        })
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.link
       })
+    })
       .then(this._checkResponse);
   }
   addCard(data) {
@@ -53,7 +53,7 @@ class Api {
         link: data.link,
       })
     })
-    .then(this._checkResponse);
+      .then(this._checkResponse);
   }
   addLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
@@ -62,7 +62,7 @@ class Api {
         authorization: this._authorization
       }
     })
-    .then(this._checkResponse);
+      .then(this._checkResponse);
   }
   deleteLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
@@ -71,7 +71,7 @@ class Api {
         authorization: this._authorization
       }
     })
-    .then(this._checkResponse);
+      .then(this._checkResponse);
   }
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
@@ -80,7 +80,7 @@ class Api {
         authorization: this._authorization
       }
     })
-    .then(this._checkResponse);
+      .then(this._checkResponse);
   }
 }
 const api = new Api({

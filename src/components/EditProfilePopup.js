@@ -1,39 +1,45 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from '../contexts/CurrentUserContext';
-import useFormValidation from '../utils/useFormValidation';
 
-function EditProfilePopup ({ isOpen, onClose, onUpdateUser} ) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, errors, isValid, isInputValid, handleChange, reset, setValue } = useFormValidation();
+  const [name, setName] = useState('');
+  const [about, setAbout] = useState('');
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  }
+  const handleAboutChange = (e) => {
+    setAbout(e.target.value);
+  }
   useEffect(() => {
     if (currentUser) {
-        setValue('firstname', currentUser.name);
-        setValue('job', currentUser.about);
+      setName(currentUser.name);
+      setAbout(currentUser.about);
     }
-  }, [currentUser, setValue]);
-  const resetForClose = () =>{
-    onClose();
-    reset({ firstname: currentUser.name, job: currentUser.about })
-  }
+  }, [currentUser]);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onUpdateUser({
-        name: values.firstname,
-        about: values.job,
-    }, reset);
+      name: name,
+      about: about,
+    });
   }
   return (
     <PopupWithForm
       title="Редактировать профиль"
       name="edit-profile"
       isOpen={isOpen}
-      onClose={resetForClose}
-      isValid={isValid}
+      onClose={onClose}
+      isLoading={isLoading}
+      buttonLabel="Сохранить"
+      onChange={handleNameChange}
       onSubmit={handleSubmit}
       fields={[
-        { name: 'firstname', type: 'text', placeholder: 'Имя', required: true, minLength: 2, maxLength: 40, value: values.firstname || '', errors: errors, isInputValid: isInputValid, onChange: handleChange },
-        { name: 'job', type: 'text', placeholder: 'О себе', required: true, minLength: 2, maxLength: 200, value: values.job || '', errors: errors, isInputValid: isInputValid, onChange: handleChange },
+        { name: 'firstname', type: 'text', placeholder: 'Имя', required: true, minLength: 2, maxLength: 40,
+        value: name, onChange: handleNameChange },
+        { name: 'job', type: 'text', placeholder: 'О себе', required: true, minLength: 2, maxLength: 200,
+        value: about, onChange: handleAboutChange },
       ]}
     />
   )
