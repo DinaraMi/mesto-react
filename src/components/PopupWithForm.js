@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PopupWithForm({ title, name, isOpen, onClose, fields, onSubmit, isLoading, onChange, buttonLabel }) {
+function PopupWithForm({ title, name, isOpen, onClose, onSubmit, isLoading, buttonLabel, children }) {
   return (
     <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container">
@@ -8,27 +8,7 @@ function PopupWithForm({ title, name, isOpen, onClose, fields, onSubmit, isLoadi
         <div className="popup__content">
           <h3 className="popup__title">{title}</h3>
           <form className={`popup__form-element popup__form-element_type_${name}`} name={`${name}-form`} onSubmit={onSubmit} >
-            {fields.map((field) => (
-              <div className="popup__input-container" key={field.name}>
-                <input
-                  id={field.name}
-                  className="popup__text"
-                  type={field.type}
-                  name={field.name}
-                  placeholder={field.placeholder}
-                  required={field.required}
-                  minLength={field.minLength}
-                  maxLength={field.maxLength}
-                  value={field.value}
-                  ref={field.ref}
-                  onChange={field.onChange}
-                />
-                <span
-                  id={`${field.name}-error`}
-                  className='popup__error'>
-                </span>
-              </div>
-            ))}
+            {children}
             <button
               className='popup__save'
               type="submit"

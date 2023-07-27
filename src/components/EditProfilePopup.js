@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import Input from './Input';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
@@ -25,6 +26,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
       about: about,
     });
   }
+  const buttonLabelText = isLoading ? "Сохранение" : "Сохранить";
   return (
     <PopupWithForm
       title="Редактировать профиль"
@@ -32,16 +34,34 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
       isOpen={isOpen}
       onClose={onClose}
       isLoading={isLoading}
-      buttonLabel="Сохранить"
-      onChange={handleNameChange}
+      buttonLabel={buttonLabelText}
       onSubmit={handleSubmit}
-      fields={[
-        { name: 'firstname', type: 'text', placeholder: 'Имя', required: true, minLength: 2, maxLength: 40,
-        value: name, onChange: handleNameChange },
-        { name: 'job', type: 'text', placeholder: 'О себе', required: true, minLength: 2, maxLength: 200,
-        value: about, onChange: handleAboutChange },
-      ]}
-    />
+    >
+      <Input
+        id='firstname'
+        className='popup__text popup__text_type_name'
+        type='text'
+        name='firstname'
+        minlength='2'
+        maxlength='40'
+        placeholder='Имя'
+        required={true}
+        value={name}
+        onChange={handleNameChange}
+      />
+      <Input
+        id='job'
+        className='popup__text popup__text_type_job'
+        type='text'
+        name='job'
+        minlength='2'
+        maxlength='200'
+        placeholder='О себе'
+        required={true}
+        value={about}
+        onChange={handleAboutChange}
+      />
+    </PopupWithForm>
   )
 }
-export default EditProfilePopup
+export default EditProfilePopup;

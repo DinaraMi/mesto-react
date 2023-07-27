@@ -20,7 +20,7 @@ function Card({ card, onCardClick, onCardLike, onCardDeleteClick }) {
   }
   return (
     <div className="group__element">
-      <img className="group__mask" style={{ backgroundImage: `url(${card.link})` }} src={card.link.toString()} alt={card.name} onClick={handleClick} />
+      <img className="group__mask" src={card.link} alt={card.name} onClick={handleClick} />
       {isOwn && <button className='group__delite' onClick={handleDeleteClick}>
         <img className="group__img" src={Trash} alt="Картинка удаления" />
       </button>}

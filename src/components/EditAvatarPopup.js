@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
+import Input from "./Input";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
   const avatarInputRef = useRef();
@@ -9,6 +10,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
       link: avatarInputRef.current.value,
     });
   }
+  const buttonLabelText = isLoading ? "Сохранение" : "Сохранить";
   return (
     <PopupWithForm
       title="Обновить аватар"
@@ -16,18 +18,19 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
       isOpen={isOpen}
       onClose={onClose}
       isLoading={isLoading}
-      buttonLabel="Сохранить"
+      buttonLabel={buttonLabelText}
       onSubmit={handleSubmit}
-      fields={[
-        {
-          name: 'avatar',
-          type: 'url',
-          placeholder: 'Ссылка на аватар',
-          required: true,
-          ref: avatarInputRef,
-        }
-      ]}
-    />
+    >
+      <Input
+        id='avatar'
+        name='link'
+        className='popup__text popup__text_type_avatar'
+        type='url'
+        placeholder='Ссылка на аватар'
+        required={true}
+        inputRef={avatarInputRef}
+      />
+    </PopupWithForm>
   );
 }
 export default EditAvatarPopup;
